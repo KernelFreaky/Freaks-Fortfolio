@@ -1,10 +1,11 @@
-import { FolderGit, Home, Phone, User, Sun, Moon } from "lucide-react";
+import { FolderGit, Home, User, Sun, Moon } from "lucide-react";
 import { useState } from "react";
 import LightRays from "./LightRays/LightRays";
 import Dock from "./Dock/Dock";
 import BlurText from "./BlurText/BlurText";
 import { TiltCard } from "./components/gsap/tilt-card";
 import Spider from "./components/gsap/spider";
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 
 export default function App() {
   const [showLightRays, setShowLightRays] = useState(true);
@@ -12,12 +13,40 @@ export default function App() {
   const items = [
     { icon: <Home size={18} color="white"/>, label: 'Home', onClick: () => document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' }), },
     { icon: <User size={18} color="white"/>, label: 'About', onClick: () => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }), },
-    { icon: <FolderGit size={18} color="white"/>, label: 'Projects', onClick: () => alert('Archive!') },
-    { icon: <Phone size={18} color="white"/>, label: 'Contact', onClick: () => alert('Settings!') },
+    { icon: <FolderGit size={18} color="white"/>, label: 'Projects', onClick: () => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }) },
+    // { icon: <Phone size={18} color="white"/>, label: 'Contact', onClick: () => alert('Settings!') },
+  ];
+
+  const projects = [
+    {
+      title: "OnlyFood Agriculture Research & Marketing System (OFARM)",
+      description: "An AI-powered platform system designed to support local farmers by enhancing their backend operations from crop planning and pricing to marketing and logistics.",
+      image: "onlyfood.png",
+      pdfUrl: "OnlyFood Case Study.pdf",
+    },
+    {
+      title: "Private File Hosting Platform with Modern Web Stack and VPN Security",
+      description: "A self-hosted platform that supports fast and secure file management across devices—without relying on third-party services",
+      image: "freak-uploads.png",
+      pdfUrl: "Private File Hosting Platform with Modern Web Stack and VPN Security.pdf",
+    },
+    {
+      title: "Vehicle Maintenance Management System",
+      description: "Under Development",
+      image: "my_logo.png",
+      pdfUrl: "/",
+    },
   ];
 
   return (
     <>
+      {/* Background Layer (under rays) */}
+      <div
+        className="fixed top-0 left-0 w-full h-full -z-20 transition-colors duration-500"
+        style={{
+          backgroundColor: showLightRays ? '#0d0d15' : '#000000',
+        }}
+      ></div>
       <div id="home">
         {/* Light rays background */}
         {showLightRays && (
@@ -146,6 +175,35 @@ export default function App() {
     <section className="text-center">
       <h1 className="text-white text-3xl">Skills</h1>
       <Spider/>
+    </section>
+
+    <section className="py-12 px-4 text-white mb-20" id="projects">
+      <h1 className="text-center text-4xl font-bold mb-10">Projects</h1>
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project, index) => (
+          <a
+            key={index}
+            href={project.pdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block transform transition duration-300 hover:-translate-y-2 hover:shadow-[0_10px_25px_rgba(255,255,255,0.15)]"
+          >
+            <Card className="bg-gray-900 text-white h-100">
+              <CardHeader className="p-0 overflow-hidden rounded-t-md">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </CardHeader>
+              <CardContent className="p-4">
+                <CardTitle className="text-xl mb-2">{project.title}</CardTitle>
+                <p className="text-sm text-gray-300">{project.description}</p>
+              </CardContent>
+            </Card>
+          </a>
+        ))}
+      </div>
     </section>
 
       {/* Dock fixed to bottom center */}

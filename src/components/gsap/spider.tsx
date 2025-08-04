@@ -10,6 +10,14 @@ const HashIcon = () => (
     </svg>
 );
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+
 // Wrapper for individual icons to give them the glassy container style and hover effects
 const IconWrapper = ({ children, className = "", isHighlighted = false, isHovered = false, animationDelay = 0 }: { children: React.ReactNode; className?: string; isHighlighted?: boolean; isHovered?: boolean; animationDelay?: number }) => (
     <div className={`
@@ -35,13 +43,14 @@ const IconGrid = () => {
     const [hoveredId, setHoveredId] = useState<number | null>(null);
 
     const outerIcons = [
-        { id: 1, component: <img src='icons/laravel.svg' width={30}/> },
-        { id: 2, component: <img src='icons/git.svg' width={30}/> },
-        { id: 3, component: <img src='icons/github.svg' width={30}/> },
-        { id: 4, component: <img src='icons/linux.svg' width={30}/> },
-        { id: 5, component: <img src='icons/mysql.svg' width={30}/> },
-        { id: 6, component: <img src='icons/react.svg' width={30}/> },
-        { id: 7, component: <img src='icons/ts.svg' width={30}/> },
+        { id: 1, label: "Laravel", component: <img src="icons/laravel.svg" width={30} /> },
+        { id: 2, label: "Git", component: <img src="icons/git.svg" width={30} /> },
+        { id: 3, label: "GitHub", component: <img src="icons/github.svg" width={30} /> },
+        { id: 4, label: "Linux", component: <img src="icons/linux.svg" width={30} /> },
+        { id: 5, label: "MySQL", component: <img src="icons/mysql.svg" width={30} /> },
+        { id: 6, label: "React", component: <img src="icons/react.svg" width={30} /> },
+        { id: 7, label: "TypeScript", component: <img src="icons/ts.svg" width={30} /> },
+        { id: 8, label: "n8n", component: <img src="icons/n8n-color.svg" width={30} /> },
     ];
     
     // Constants for layout calculation
@@ -152,40 +161,47 @@ const IconGrid = () => {
                 </div>
 
                 {/* Mapping over the outer icons to place them */}
-                {outerIcons.map((icon, i) => {
-                    const angleInDegrees = -90 + i * (360 / outerIcons.length);
-                    const angleInRadians = angleInDegrees * (Math.PI / 180);
-                    const x = radius * Math.cos(angleInRadians);
-                    const y = radius * Math.sin(angleInRadians);
-                    
-                    const iconStyle = {
-                        transform: `translate(${x}px, ${y}px)`
-                    };
-                    const isHovered = hoveredId === icon.id;
+<TooltipProvider>
+  {outerIcons.map((icon, i) => {
+    const angleInDegrees = -90 + i * (360 / outerIcons.length);
+    const angleInRadians = angleInDegrees * (Math.PI / 180);
+    const x = radius * Math.cos(angleInRadians);
+    const y = radius * Math.sin(angleInRadians);
+    const iconStyle = {
+      transform: `translate(${x}px, ${y}px)`
+    };
+    const isHovered = hoveredId === icon.id;
 
-                    return (
-                        <div 
-                            key={icon.id}
-                            className="absolute z-10" 
-                            style={iconStyle}
-                            onMouseEnter={() => setHoveredId(icon.id)}
-                            onMouseLeave={() => setHoveredId(null)}
-                        >
-                             <div className="-translate-x-1/2 -translate-y-1/2 relative">
-                                {/* Spotlight effect */}
-                                <div className={`absolute inset-[-20px] bg-blue-500/20 dark:bg-blue-500/30 rounded-full blur-2xl transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}></div>
-                                
-                                <IconWrapper 
-                                    className="w-16 h-16" 
-                                    isHovered={isHovered}
-                                    animationDelay={i * 0.15}
-                                >
-                                    {icon.component}
-                                </IconWrapper>
-                            </div>
-                        </div>
-                    );
-                })}
+    return (
+      <div
+        key={icon.id}
+        className="absolute z-10"
+        style={iconStyle}
+        onMouseEnter={() => setHoveredId(icon.id)}
+        onMouseLeave={() => setHoveredId(null)}
+      >
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="-translate-x-1/2 -translate-y-1/2 relative">
+              <div className={`absolute inset-[-20px] bg-blue-500/20 dark:bg-blue-500/30 rounded-full blur-2xl transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}></div>
+              <IconWrapper
+                className="w-16 h-16"
+                isHovered={isHovered}
+                animationDelay={i * 0.15}
+              >
+                {icon.component}
+              </IconWrapper>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="top" className="text-sm font-semibold">
+            {icon.label}
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    );
+  })}
+</TooltipProvider>
+
             </div>
         </div>
     );
