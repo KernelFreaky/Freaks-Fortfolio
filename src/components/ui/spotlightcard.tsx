@@ -1,9 +1,8 @@
-import React from "react";
 
 export default function SpotlightCard() {
   return (
     <>
-      <style jsx>{`
+      <style>{`
         @property --border-angle {
           syntax: "<angle>";
           inherits: true;
