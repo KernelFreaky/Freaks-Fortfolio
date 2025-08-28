@@ -131,9 +131,9 @@ export default function App() {
             // style={{ textShadow: '0 0 10px rgba(255, 215, 0, 0.5)' }}
           />
 
-          <button className="border border-yellow-400 p-2 sm:p-3 md:p-4 text-white rounded-md bg-gray-800 hover:bg-black cursor-pointer text-sm sm:text-base transition-all duration-200 hover:scale-105">
-            View Resume
-          </button>
+          <a href='FREQUEMARF_PACULBA_JR_CV.pdf' target="_blank" className="border border-yellow-400 p-2 sm:p-3 md:p-4 text-white rounded-md bg-gray-800 hover:bg-black cursor-pointer text-sm sm:text-base transition-all duration-200 hover:scale-105 z-100">
+            View CV
+          </a>
 
           <div className="border border-yellow-400 w-[95%] sm:w-[90%] mt-8 sm:mt-12 md:mt-16 lg:mt-20"></div>
         </section>
