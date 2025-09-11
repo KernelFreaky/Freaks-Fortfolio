@@ -42,7 +42,7 @@ const Header = () => {
               LinkedIn
             </a>
             <a
-              href="FREQUEMARF_PACULBA_JR_CV.pdf"
+              href="FREQUEMARF_PACULBA_JR_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
